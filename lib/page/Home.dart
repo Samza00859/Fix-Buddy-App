@@ -1,31 +1,65 @@
 import 'package:flutter/material.dart';
 import 'queue.dart'; // นำเข้าไฟล์ queue.dart
 import 'contact.dart'; // นำเข้าไฟล์ contact.dart
+import 'profile.dart'; // นำเข้าไฟล์ profile.dart
 
 class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16.0),
-      children: const [
-        ShopCard(
-          name: 'ร้าน A',
-          hours: '9:00 - 18:00',
-          distance: '2 km',
-          phone: '081-234-5678',
-          line: '@fixbuddyA',
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.orange,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            width: 40, // กำหนดความกว้างของรูปภาพ
+            height: 40, // กำหนดความสูงของรูปภาพ
+            child: Image.asset(
+                'assets/image/FixBuddy.png'), // เพิ่มรูปภาพที่ซ้ายสุด
+          ),
         ),
-        SizedBox(height: 16.0),
-        ShopCard(
-          name: 'ร้าน B',
-          hours: '10:00 - 19:00',
-          distance: '3 km',
-          phone: '082-345-6789',
-          line: '@fixbuddyB',
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Profile(
+                    username: 'ชื่อผู้ใช้', // แทนที่ด้วยข้อมูลจริง
+                    email: 'email@example.com', // แทนที่ด้วยข้อมูลจริง
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      body: Container(
+        color: Colors.white, // เปลี่ยนพื้นหลังเป็นสีขาว
+        child: ListView(
+          padding: const EdgeInsets.all(16.0),
+          children: const [
+            ShopCard(
+              name: 'ร้าน A',
+              hours: '9:00 - 18:00',
+              distance: '2 km',
+              phone: '081-234-5678',
+              line: '@fixbuddyA',
+            ),
+            SizedBox(height: 16.0),
+            ShopCard(
+              name: 'ร้าน B',
+              hours: '10:00 - 19:00',
+              distance: '3 km',
+              phone: '082-345-6789',
+              line: '@fixbuddyB',
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
@@ -78,7 +112,6 @@ class _ShopCardState extends State<ShopCard> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white, // สีพื้นหลังของปุ่ม
-                // onPrimary: Colors.orange, // สีของข้อความในปุ่ม
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),

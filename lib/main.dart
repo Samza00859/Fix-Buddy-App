@@ -36,16 +36,46 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _isLoggedIn = true;
     });
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const Home()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Fix Buddy'),
-        backgroundColor: Colors.orange,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(80.0), // กำหนดความสูงของ AppBar
+        child: AppBar(
+          backgroundColor: Colors.orange,
+          leading: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: SizedBox(
+              width: 60, // กำหนดความกว้างของรูปภาพ
+              height: 60, // กำหนดความสูงของรูปภาพ
+              child: Image.asset(
+                  'assets/image/FixBuddy.png'), // เพิ่มรูปภาพที่ซ้ายสุด
+            ),
+          ),
+        ),
       ),
-      body: _isLoggedIn ? const Home() : Login(onLogin: _login),
+      body: Container(
+        color: Colors.white, // เปลี่ยนพื้นหลังเป็นสีขาว
+        child: Navigator(
+          onGenerateRoute: (RouteSettings settings) {
+            Widget page;
+            switch (settings.name) {
+              case '/':
+                page = _isLoggedIn ? const Home() : Login(onLogin: _login);
+                break;
+              default:
+                page = _isLoggedIn ? const Home() : Login(onLogin: _login);
+            }
+            return MaterialPageRoute(builder: (context) => page);
+          },
+        ),
+      ),
     );
   }
 }
